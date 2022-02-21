@@ -8,6 +8,9 @@ require:
 AllCops:
   NewCops: enable
   Exclude:
+    - "Gemfile"
+    - "Rakefile"
+    - "config.ru"
     - "vendor/**/*"
     - "spec/fixtures/**/*"
     - "tmp/**/*"
