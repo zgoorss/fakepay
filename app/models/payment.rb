@@ -3,5 +3,5 @@
 class Payment < ApplicationRecord
   belongs_to :customer
 
-  validates :customer_id, :token, presence: true
+  validates :token, presence: true
 end
