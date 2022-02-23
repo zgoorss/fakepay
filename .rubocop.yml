@@ -153,3 +153,6 @@ InternalAffairs/UndefinedConfig:
 InternalAffairs/StyleDetectedApiUse:
   Exclude:
     - "lib/rubocop/cop/mixin/percent_array.rb"
+
+Style/Documentation:
+  Enabled: false
