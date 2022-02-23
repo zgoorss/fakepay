@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Payment < ApplicationRecord
-  belongs_to :customer
+  belongs_to :subscription
 
-  validates :token, presence: true
+  enum status: { completed: 0, failed: 1 }
+  validates :amount, :status, :payload, presence: true
 end

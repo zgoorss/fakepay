@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_22_224556) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_23_191047) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,11 +24,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_22_224556) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.bigint "customer_id", null: false
-    t.string "token", null: false
+    t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_payments_on_customer_id"
+    t.bigint "subscription_id"
+    t.decimal "amount", default: "0.0", null: false
+    t.integer "status", null: false
+    t.json "payload", null: false
+    t.index ["subscription_id"], name: "index_payments_on_subscription_id"
   end
 
   create_table "plans", force: :cascade do |t|
@@ -50,7 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_22_224556) do
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
   end
 
-  add_foreign_key "payments", "customers"
+  add_foreign_key "payments", "subscriptions"
   add_foreign_key "subscriptions", "customers"
   add_foreign_key "subscriptions", "plans"
 end
