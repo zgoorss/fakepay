@@ -3,6 +3,5 @@
 class Payment < ApplicationRecord
   belongs_to :subscription
 
-  enum status: { completed: 0, failed: 1 }
-  validates :amount, :status, :payload, presence: true
+  validates :amount, presence: true
 end

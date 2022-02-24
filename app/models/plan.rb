@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
 class Plan < ApplicationRecord
-  validates :name, :price, presence: true
+  has_many :subscriptions
+
+  validates :name, :price_in_cents, presence: true
 end

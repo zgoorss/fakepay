@@ -2,7 +2,8 @@
 
 FactoryBot.define do
   factory :payment do
-    association :customer
+    association :subscription
     token { SecureRandom.base58(24) }
+    amount { 1000 }
   end
 end

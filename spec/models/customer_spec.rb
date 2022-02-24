@@ -8,4 +8,8 @@ describe Customer, type: :model do
     it { is_expected.to validate_presence_of(:address) }
     it { is_expected.to validate_presence_of(:zip_code) }
   end
+
+  describe 'associations' do
+    it { is_expected.to have_many(:subscriptions) }
+  end
 end
