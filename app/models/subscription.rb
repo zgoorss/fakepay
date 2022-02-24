@@ -13,6 +13,6 @@ class Subscription < ApplicationRecord
   scope :inactive, -> { where(active: false) }
 
   def new_expires_at_date
-    (expires_at || Date.today) + VALIDITY_DATE
+    expires_at + VALIDITY_DATE
   end
 end
