@@ -3,6 +3,9 @@
 module Api
   module V1
     class SubscriptionsController < ApplicationController
+      include Api::Helpers::Rescuers::FakepayErrorsRescue
+      include Api::Helpers::Rescuers::SubscriptionErrorsRescue
+
       def create
         subscription = SubscriptionServices::Purchase.new(create_params).call
         render json: { status: 201,
