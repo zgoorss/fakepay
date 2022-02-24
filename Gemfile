@@ -41,6 +41,7 @@ gem 'faraday', '~> 2.2'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'database_cleaner-active_record'
   gem 'rspec-rails', '~> 5.1'
   gem 'rubocop-performance', '~> 1.13', '>= 1.13.2'
   gem 'rubocop-rails', '~> 2.13', '>= 2.13.2'
