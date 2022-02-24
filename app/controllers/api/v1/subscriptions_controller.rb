@@ -5,7 +5,8 @@ module Api
     class SubscriptionsController < ApplicationController
       def create
         subscription = SubscriptionServices::Purchase.new(create_params).call
-        render json: subscription
+        render json: { status: 201,
+                       data: { subscription: subscription, customer: subscription.customer } }
       end
 
       private
@@ -13,10 +14,10 @@ module Api
       def create_params
         {
           plan_id: params.require(:plan_id),
-          customer_id: params.require(:customer_id),
-          customer_params: params.require(:customer).permit(:id, :name, :address, :zip_code).to_h,
+          customer_id: params.fetch(:customer_id, nil),
+          customer_params: params.fetch(:customer, {}).permit(:name, :address, :zip_code),
           payment_params: params.require(:payment)
-                                .permit(:card_number, :expiration_date, :cvv, :zip_code).to_h
+                                .permit(:card_number, :expiration_date, :cvv, :zip_code)
         }
       end
     end

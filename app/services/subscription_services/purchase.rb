@@ -15,10 +15,10 @@ module SubscriptionServices
       ActiveRecord::Base.transaction do
         raise SubscriptionExists if subscription_exists?
 
-        payment
         subscription = build_subscription
-        subscription.payments << payment
+        subscription.payments << build_payment
         subscription.save!
+        subscription
       end
     end
 
@@ -31,16 +31,27 @@ module SubscriptionServices
     end
 
     def plan
-      @plan ||= Plan.find_by!(id: plan_id)
+      @plan ||= Plan.find(plan_id)
     end
 
     def customer
-      @customer ||= CustomerServices::FindOrCreateFromParams.new(customer_params).call
+      @customer ||= if customer_id.present?
+                      Customer.find(customer_id)
+                    else
+                      Customer.find_or_create_by!(customer_params)
+                    end
     end
 
-    def payment
-      @payment ||= PaymentServices::CreatePayment.new(
-        amount: plan.price, payment_params: payment_params
+    def build_payment
+      @build_payment ||= PaymentServices::BuildPayment.new(
+        amount: plan.price_in_cents,
+        payment_params: {
+          card_number: payment_params.fetch(:card_number),
+          cvv: payment_params.fetch(:cvv),
+          expiration_month: parsed_date.month,
+          expiration_year: parsed_date.year,
+          zip_code: payment_params.fetch(:zip_code)
+        }
       ).call
     end
 
@@ -48,8 +59,14 @@ module SubscriptionServices
       Subscription.new(
         plan: plan,
         customer: customer,
-        expires_at: Time.zone.now + 1.month,
+        expires_at: Date.today + Subscription::VALIDITY_DATE,
         active: true
+      )
+    end
+
+    def parsed_date
+      @parsed_date ||= SubscriptionServices::DateParser.new(
+        date: payment_params.fetch(:expiration_date)
       )
     end
   end

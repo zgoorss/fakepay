@@ -1,11 +1,18 @@
 # frozen_string_literal: true
 
 class Subscription < ApplicationRecord
+  VALIDITY_DATE = 1.month
+
   belongs_to :customer
   belongs_to :plan
   has_many :payments, dependent: :delete_all
 
   validates :expires_at, presence: true
 
-  validates :expires_at, :active, presence: true
+  scope :expired, -> { where('expires_at <= ?', Date.today) }
+  scope :inactive, -> { where(active: false) }
+
+  def new_expires_at_date
+    (expires_at || Date.today) + VALIDITY_DATE
+  end
 end
