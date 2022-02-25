@@ -53,9 +53,6 @@ Layout/EndOfLine:
 Layout/ClassStructure:
   Enabled: true
 
-Layout/RedundantLineBreak:
-  Enabled: true
-
 Layout/TrailingWhitespace:
   AllowInHeredoc: false
 
@@ -170,4 +167,16 @@ Style/NumericLiterals:
   Enabled: false
 
 Lint/AmbiguousOperator:
+  Enabled: false
+
+RSpec/HookArgument:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+Style/OpenStructUse:
+  Enabled: false
+
+RSpec/DescribeClass:
   Enabled: false
