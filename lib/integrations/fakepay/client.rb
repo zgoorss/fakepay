@@ -22,7 +22,6 @@ module Integrations
 
       def connection
         Faraday.new(
-          url: 'http://httpbingo.org',
           headers: {
             'Content-Type' => 'application/json',
             'Authorization' => "Token token=#{generated_api_key}"
