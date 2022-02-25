@@ -15,18 +15,16 @@ module Api
           rescue_from ActiveRecord::RecordNotFound do |error|
             render json: {
               title: ERROR_MESSAGES.fetch(:record_not_found),
-              status: 404,
               error: error
-            }
+            }, status: 404
           end
 
           rescue_from ActiveRecord::RecordInvalid do |error|
             render json: {
               title: ERROR_MESSAGES.fetch(:record_invalid),
-              status: 422,
               error: error,
               detail: error.message
-            }
+            }, status: 422
           end
         end
       end

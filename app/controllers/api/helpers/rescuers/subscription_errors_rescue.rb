@@ -11,12 +11,11 @@ module Api
         }.freeze
 
         included do
-          rescue_from SubscriptionServices::Purchase::SubscriptionExists do |error|
+          rescue_from SubscriptionServices::Purchase::SubscriptionExists do
             render json: {
               title: ERROR_MESSAGES.fetch(:subscription_exists),
-              status: 422,
-              error: error.class.name.demodulize.underscore
-            }
+              error: 'subscription_exists'
+            }, status: 422
           end
         end
       end

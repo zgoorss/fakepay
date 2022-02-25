@@ -8,8 +8,7 @@ module Api
 
       def create
         subscription = SubscriptionServices::Purchase.new(create_params).call
-        render json: { status: 201,
-                       data: { subscription: subscription, customer: subscription.customer } }
+        render json: { subscription: subscription, customer: subscription.customer }, status: 201
       end
 
       private

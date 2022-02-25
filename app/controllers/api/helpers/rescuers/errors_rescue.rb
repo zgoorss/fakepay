@@ -14,9 +14,8 @@ module Api
           rescue_from ActionController::ParameterMissing do |error|
             render json: {
               title: ERROR_MESSAGES.fetch(:bad_request),
-              status: 400,
               error: error
-            }
+            }, status: 400
           end
         end
       end

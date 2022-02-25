@@ -23,17 +23,15 @@ module Api
             underscored_error = error.class.name.demodulize.underscore.to_sym
             render json: {
               title: ERROR_MESSAGES.fetch(underscored_error),
-              status: 422,
               error: underscored_error
-            }
+            }, status: 422
           end
 
           rescue_from Integrations::Fakepay::Errors::ServiceUnavailable do |error|
             render json: {
               title: ERROR_MESSAGES.fetch(:service_unavailable),
-              status: 503,
               error: error.class.name.demodulize.underscore
-            }
+            }, status: 503
           end
         end
       end
